@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Database\Fixtures;
 
-use Database\Fixtures\FakerProvider\RamseyUuid;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory as FakerGeneratorFactory;
 use Faker\Generator as FakerGenerator;
@@ -25,6 +24,7 @@ class LoadFixture extends NativeLoader
     {
         $generator = FakerGeneratorFactory::create('fr_FR');
         $generator->addProvider(new AliceProvider());
+        $generator->addProvider(new RamseyUuid($generator));
         $generator->seed($this->getSeed());
 
         $this->objectManager;

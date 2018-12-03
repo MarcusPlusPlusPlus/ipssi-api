@@ -30,7 +30,7 @@ class Location
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="`long`")
      */
     private $long;
 

@@ -1,1 +1,53 @@
-include:
+App\Entity\Armory:
+    tenu_crs:
+        id: '<ramseyUuid()>'
+        cost: 250
+        name: 'Combinaison de défense'
+        stock: 561
+    grenade_lacrimo:
+        id: '<ramseyUuid()>'
+        cost: 55
+        name: 'Grenade Lacrimo'
+        stock: 1612
+    bouclier_anti_emeute:
+        id: '<ramseyUuid()>'
+        cost: 102
+        name: 'Bouclier Anti-emeute'
+        stock: 162
+    tenu_infiltration:
+        id: '<ramseyUuid()>'
+        cost: 299
+        name: "Tenu d'infiltration"
+        stock: 189
+    lance_grenade:
+        id: '<ramseyUuid()>'
+        cost: 166
+        name: 'Lance Grenade'
+        stock: 795
+    matraque:
+        id: '<ramseyUuid()>'
+        cost: 25
+        name: 'Matraque'
+        stock: 623
+
+App\Entity\Location:
+    barrack_location_{0..10}:
+        id: '<ramseyUuid()>'
+        name: '<city()>'
+        lat: '<latitude()>'
+        long: '<longitude()>'
+
+App\Entity\InterventionGroup:
+    grp_{1..10}:
+        id: '<ramseyUuid()>'
+        barrackLocation: '@barrack_location_<current()>'
+        name: '<word()>'
+
+App\Entity\Crs:
+    crs_{1..50}:
+        id: '<ramseyUuid()>'
+        accessLevel: '<randomElement(["Général", "Caporal", "Adjudant", "Soldat"])>'
+        dream:  '<randomElement(["Chevauché une licorne", "Vivre sur les iles", "Etre riche", "Devenir Maitre du monde ! (mais chuuut)"])>'
+        group: '@grp_<numberBetween(1,10)>'
+        name: '<name()>'
+        registrationNumber: '<numberBetween(1186,8932)>'
