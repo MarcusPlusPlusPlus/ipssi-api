@@ -1,0 +1,111 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ */
+class Crs
+{
+    use EntityIdTrait;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $accessLevel;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $registrationNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $dream;
+
+    /**
+     * @var InterventionGroup
+     *
+     * @ORM\ManyToOne(targetEntity="InterventionGroup")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $group;
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): Crs
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getAccessLevel(): string
+    {
+        return $this->accessLevel;
+    }
+
+    public function setAccessLevel(string $accessLevel): Crs
+    {
+        $this->accessLevel = $accessLevel;
+
+        return $this;
+    }
+
+    public function getRegistrationNumber(): string
+    {
+        return $this->registrationNumber;
+    }
+
+    public function setRegistrationNumber(string $registrationNumber): Crs
+    {
+        $this->registrationNumber = $registrationNumber;
+
+        return $this;
+    }
+
+    public function getDream(): string
+    {
+        return $this->dream;
+    }
+
+    public function setDream(string $dream): Crs
+    {
+        $this->dream = $dream;
+
+        return $this;
+    }
+
+    public function getGroup(): InterventionGroup
+    {
+        return $this->group;
+    }
+
+    public function setGroup(InterventionGroup $group): Crs
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+}

@@ -1,0 +1,8 @@
+App\Infra\Entity\User:
+  allan:
+    id: '<ramseyUuid()>'
+    username: 'Allan Rethore'
+    googleUserId: ~
+    facebookUserId: '1101987793286854'
+    accessLevel: 'employee'
+    stripeCustomerId: ~
