@@ -5,19 +5,9 @@
 
 /vendor/
 
-.env.dev
-.env.test
-.env.prod
-
 docker-compose.override.yml
 
 .phpunit
 /phpunit.xml
 
 /.idea
-
-/config/service_account_credentials.json
-
-###> lexik/jwt-authentication-bundle ###
-/config/jwt/*.pem
-###< lexik/jwt-authentication-bundle ###

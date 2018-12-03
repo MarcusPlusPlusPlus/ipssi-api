@@ -1,21 +1,26 @@
-USERID=$(shell id -u)
-GROUPID=$(shell id -g)
-
 CONSOLE=php bin/console
 FIG=docker-compose
-HAS_DOCKER:=$(shell command -v $(FIG) 2> /dev/null)
 
-ifdef HAS_DOCKER
-    ifdef APP_ENV
-        EXECROOT=$(FIG) exec -e APP_ENV=$(APP_ENV) app
-        EXEC=$(FIG) exec -e APP_ENV=$(APP_ENV) -u $(USERID):$(GROUPID) app
-	else
-        EXECROOT=$(FIG) exec app
-        EXEC=$(FIG) exec -u $(USERID):$(GROUPID) app
-	endif
+ifeq ($(OS),Windows_NT)
+    EXECROOT=$(FIG) exec app
+    EXEC=$(FIG) exec -u $(USERID):$(GROUPID) app
 else
-	EXECROOT=
-	EXEC=
+    USERID=$(shell id -u)
+    GROUPID=$(shell id -g)
+    HAS_DOCKER:=$(shell command -v $(FIG) 2> /dev/null)
+
+    ifdef HAS_DOCKER
+        ifdef APP_ENV
+            EXECROOT=$(FIG) exec -e APP_ENV=$(APP_ENV) app
+            EXEC=$(FIG) exec -e APP_ENV=$(APP_ENV) -u $(USERID):$(GROUPID) app
+        else
+            EXECROOT=$(FIG) exec app
+            EXEC=$(FIG) exec -u $(USERID):$(GROUPID) app
+        endif
+    else
+        EXECROOT=
+        EXEC=
+    endif
 endif
 
 .DEFAULT_GOAL := help
@@ -151,10 +156,13 @@ vendor:
 ##---------------------------------------------------------------------------
 
 docker-compose.override.yml: docker-compose.override.yml.dist
-	$(RUN) cp docker-compose.override.yml.dist docker-compose.override.yml
+	cp docker-compose.override.yml.dist docker-compose.override.yml || true
+	xcopy docker-compose.override.yml.dist docker-compose.override.yml || true
 
 .env.test: .env.test.dist
-	$(RUN) cp .env.test.dist .env.test
+	cp .env.test.dist .env.test || true
+	xcopy .env.test.dist .env.test || true
 
 .env.dev: .env.dev.dist
-	$(RUN) cp .env.dev.dist .env.dev
+	cp .env.dev.dist .env.dev || true
+	xcopy .env.dev.dist .env.dev || true
