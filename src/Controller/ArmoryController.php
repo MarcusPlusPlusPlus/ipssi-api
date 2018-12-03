@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controller;
-
 
 use App\Entity\Armory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

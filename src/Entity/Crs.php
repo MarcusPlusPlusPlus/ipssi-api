@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity()
@@ -16,6 +17,7 @@ class Crs
     /**
      * @var string
      *
+     * @Groups({"FullInterventionGroup"})
      * @ORM\Column(type="string")
      */
     protected $name;
@@ -23,6 +25,7 @@ class Crs
     /**
      * @var string
      *
+     * @Groups({"FullInterventionGroup"})
      * @ORM\Column(type="string")
      */
     protected $accessLevel;
@@ -30,6 +33,7 @@ class Crs
     /**
      * @var string
      *
+     * @Groups({"FullInterventionGroup"})
      * @ORM\Column(type="string")
      */
     protected $registrationNumber;
@@ -37,6 +41,7 @@ class Crs
     /**
      * @var string
      *
+     * @Groups({"FullInterventionGroup"})
      * @ORM\Column(type="string")
      */
     protected $dream;
@@ -44,7 +49,8 @@ class Crs
     /**
      * @var InterventionGroup
      *
-     * @ORM\ManyToOne(targetEntity="InterventionGroup")
+     * @Groups({"Hidden"})
+     * @ORM\ManyToOne(targetEntity="InterventionGroup", inversedBy="Crs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $group;
