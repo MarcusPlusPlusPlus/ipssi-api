@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -32,7 +33,7 @@ class InterventionGroup
     private $name;
 
     /**
-     * @var Crs[] | \Doctrine\Common\Collections\Collection
+     * @var Crs[]|Collection
      *
      * @Groups({"FullInterventionGroup"})
      * @ORM\OneToMany(targetEntity="Crs", mappedBy="group")
@@ -64,15 +65,16 @@ class InterventionGroup
         return $this;
     }
 
-    public function getCrs(): \Doctrine\Common\Collections\Collection
+    public function getCrs(): Collection
     {
         return $this->crs;
     }
 
     /**
-     * @param Crs[] $crs
+     * @param Crs[]|Collection $crs
+     * @return InterventionGroup
      */
-    public function setCrs(array $crs): self
+    public function setCrs($crs): self
     {
         $this->crs = $crs;
 

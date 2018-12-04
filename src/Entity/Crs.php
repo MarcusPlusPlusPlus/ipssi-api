@@ -50,7 +50,7 @@ class Crs
      * @var InterventionGroup
      *
      * @Groups({"Hidden"})
-     * @ORM\ManyToOne(targetEntity="InterventionGroup", inversedBy="Crs")
+     * @ORM\ManyToOne(targetEntity="InterventionGroup", inversedBy="crs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $group;
