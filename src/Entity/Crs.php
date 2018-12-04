@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -17,7 +16,7 @@ class Crs
     /**
      * @var string
      *
-     * @Groups({"FullInterventionGroup"})
+     * @Groups({"Default"})
      * @ORM\Column(type="string")
      */
     protected $name;
@@ -25,7 +24,7 @@ class Crs
     /**
      * @var string
      *
-     * @Groups({"FullInterventionGroup"})
+     * @Groups({"Default"})
      * @ORM\Column(type="string")
      */
     protected $accessLevel;
@@ -33,7 +32,7 @@ class Crs
     /**
      * @var string
      *
-     * @Groups({"FullInterventionGroup"})
+     * @Groups({"Default"})
      * @ORM\Column(type="string")
      */
     protected $registrationNumber;
@@ -41,7 +40,7 @@ class Crs
     /**
      * @var string
      *
-     * @Groups({"FullInterventionGroup"})
+     * @Groups({"Default"})
      * @ORM\Column(type="string")
      */
     protected $dream;
