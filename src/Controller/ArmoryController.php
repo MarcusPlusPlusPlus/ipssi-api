@@ -30,4 +30,5 @@ class ArmoryController extends AbstractController
         //Send response
         return new JsonResponse($serailizer->normalize($armoryContents), 200);
     }
+
 }

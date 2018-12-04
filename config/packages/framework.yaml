@@ -10,6 +10,6 @@ framework:
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
     serializer:
         enabled: true
-        enable_annotations: false
+        enable_annotations: true
     property_info:
         enabled: true

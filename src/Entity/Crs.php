@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity()
  */
@@ -16,12 +16,16 @@ class Crs
     /**
      * @var string
      *
+     * @Groups({"Default"})
+     *
      * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
      * @var string
+     *
+     *  @Groups({"Default"})
      *
      * @ORM\Column(type="string")
      */
@@ -30,6 +34,7 @@ class Crs
     /**
      * @var string
      *
+     * @Groups({"Default"})
      * @ORM\Column(type="string")
      */
     protected $registrationNumber;
@@ -37,6 +42,7 @@ class Crs
     /**
      * @var string
      *
+     * @Groups({"Default"})
      * @ORM\Column(type="string")
      */
     protected $dream;
