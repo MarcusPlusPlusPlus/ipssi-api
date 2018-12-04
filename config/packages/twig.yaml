@@ -1,6 +1,0 @@
-
-twig:
-    paths:
-        '%kernel.project_dir%/template': ~
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
