@@ -22,7 +22,7 @@ class Mission
     private $location;
 
     /**
-     * @var InterventionGroup[]
+     * @var InterventionGroup[] | \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="InterventionGroup")
      */
@@ -54,7 +54,7 @@ class Mission
         return $this;
     }
 
-    public function getGroups(): array
+    public function getGroups(): \Doctrine\Common\Collections\Collection
     {
         return $this->groups;
     }

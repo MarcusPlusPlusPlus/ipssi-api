@@ -16,7 +16,7 @@ trait EntityIdTrait
      */
     protected $id;
 
-    public function getId(): UuidInterface
+    public function getId(): ?UuidInterface
     {
         return $this->id;
     }
