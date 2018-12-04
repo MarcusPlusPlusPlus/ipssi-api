@@ -5,27 +5,22 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Armory;
+use http\Env\Request;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
-use Symfony\Component\Serializer\Serializer;
 
 class ArmoryController extends AbstractController
 {
     /**
      * @Route(path="/armory", methods={"GET"})
-     *
      * @return JsonResponse
      */
     public function list()
     {
         //Dependency
         $armoryRepository = $this->getDoctrine()->getRepository(Armory::class);
-
-        /** @var Serializer $serailizer */
         $serailizer = $this->get('serializer');
 
         //My Logic
@@ -37,35 +32,29 @@ class ArmoryController extends AbstractController
 
     /**
      * @Route(path="/armory", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function add(Request $request)
     {
-        //Dependency
-        /** @var Serializer $serailizer */
-        $serailizer = $this->get('serializer');
+        /** @var Serailizer $serailizer */
+        $serailizer = $this->get('serailizer');
         $doctrine = $this->getDoctrine();
 
         try {
-            //Je Récupère le contenu de message depuis le body
-            $armory = $serailizer->deserialize($request->getContent(), Armory::class,  'json');
-        }
-        //J'attrape tout les erreurs et renvoi une 400 Bad Query
-        catch (\Exception $exception) {
+            $armory = $serailizer->deserialize($request->getContent(), Armory::class, 'json');
+            $armory->setId(Uuid::uuid4());
+        } catch (NotEncodableValueException $exception) {
             return new JsonResponse([
                 'code' => 400,
-                'type' => 'Bad Query',
-                'message' => 'Mal formatted Query, Body is not a valid JSON'
+                'message' => 'Mal formatted Querry, Body is not valid JSON'
             ], 400);
         }
 
-        //Je genere un nouvelle ID pour l'objet
-        $armory->setId(Uuid::uuid4());
-
-        //Je le sauvegarde dans la DB
-        $doctrine->getManager()->persist($armory);
+        $doctrine->getManagement()->persist($armory);
         $doctrine->getManager()->flush();
 
-        //Je renvoi le nouvelle objet crée
         return new JsonResponse($serailizer->normalize($armory), 201);
     }
 }

@@ -1,0 +1,130 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Entity\Mission;
+use Doctrine\ORM\EntityManager;
+use http\Env\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+class MissionController extends AbstractController
+{
+    /**
+     * @Route(path="/mission", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function list()
+    {
+        //Dependency
+        $missionRepository = $this->getDoctrine()->getRepository(Mission::class);
+        $serailizer = $this->get('serializer');
+
+        //My Logic
+        $missionContents = $missionRepository->findAll();
+
+        //Send response
+        return new JsonResponse($serailizer->normalize($missionContents), 200);
+    }
+
+    /**
+     * @Route(path="/mission/{id}", methods={"GET"})
+     * @param $id
+     * @return JsonResponse
+     */
+    public function listById($id)
+    {
+        //Dependency
+        $missionRepository = $this->getDoctrine()->getRepository(Mission::class);
+        $serailizer = $this->get('serializer');
+
+        $missionId = $missionRepository->find($id);
+        $missionFound = $serailizer->normalize($missionId);
+
+        //Send response
+        return new JsonResponse($missionFound, 200);
+    }
+
+    /**
+     * @Route(path="/mission", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function add(Request $request)
+    {
+        /** @var Serializer $serailizer */
+        $serailizer = $this->get('serializer');
+        $doctrine = $this->getDoctrine();
+
+        try {
+            $mission = $serailizer->deserialize($request->getContent(), Mission::class, 'json');
+            $mission->setId(Uuid::uuid4());
+        } catch (NotEncodableValueException $exception) {
+            return new JsonResponse([
+                'code' => 400,
+                'message' => 'Mal formatted Querry, Body is not valid JSON'
+            ], 400);
+        }
+
+        $doctrine->getManagement()->persist($mission);
+        $doctrine->getManager()->flush();
+
+        return new JsonResponse($serailizer->normalize($mission), 201);
+    }
+
+    /**
+     * @Route(path="/mission/{uuid}", methods={"DELETE"})
+     * @param String $uuid
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(String $uuid)
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getDoctrine()->getManager();
+        $mission = $entityManager->getRepository('Mission:class')->find($uuid);
+
+        if ($mission == null) {
+            return new JsonResponse([
+                'code' => 404,
+                'message' => 'Not mission found for ' . $uuid,
+            ], 404);
+        }
+
+        $entityManager->remove($mission);
+        $entityManager->flush();
+
+        return new JsonResponse(null, 204);
+    }
+
+    /**
+     * @Route (path="/mission/{uuid}", methods={"PUT"})
+     * @param String $uuid
+     * @return JsonResponse
+     */
+    public function update(String $uuid)
+    {
+
+        /** @var EntityManager $entityManager */
+        $entityManager = $this->getDoctrine()->getManager();
+        $mission = $entityManager->getRepository('Mission:class')->find($uuid);
+
+        if ($mission == null) {
+            return new JsonResponse([
+                'code' => 404,
+                'message' => 'Not mission found for ' . $uuid,
+            ], 404);
+        }
+
+        /* change mission*/
+
+        $newMission = null;
+
+        return new JsonResponse($newMission, 200);
+    }
+
+}
