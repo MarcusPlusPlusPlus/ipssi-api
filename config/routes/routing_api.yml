@@ -1,0 +1,4 @@
+_v1:
+  type:     annotation
+  resource: ../../src/Controller/Api
+  prefix: /api/v1/elysee
